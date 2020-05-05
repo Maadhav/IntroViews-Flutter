@@ -15,10 +15,15 @@ import 'package:intro_views_flutter/UI/page_indicator_buttons.dart';
 import 'package:intro_views_flutter/UI/pager_indicator.dart';
 import 'package:intro_views_flutter/UI/page.dart' as IntoUIPage;
 
+import 'UI/page_indicator_buttons.dart';
+
 /// This is the IntroViewsFlutter widget of app which is a stateful widget as its state is dynamic and updates asynchronously.
 class IntroViewsFlutter extends StatefulWidget {
   /// List of [PageViewModel] to display
   final List<PageViewModel> pages;
+
+  ///background color of bottom navigation where skip, back, next and dots are placed
+  final Color bottomBarColor;
 
   /// Callback on Done Button Pressed
   final VoidCallback onTapDoneButton;
@@ -113,6 +118,7 @@ class IntroViewsFlutter extends StatefulWidget {
     this.nextText = const Text("NEXT"),
     this.skipText = const Text("SKIP"),
     this.backText = const Text("BACK"),
+    this.bottomBarColor = Colors.transparent,
     this.doneButtonPersist = false,
     this.columnMainAxisAlignment = MainAxisAlignment.spaceAround,
     this.fullTransition = FULL_TARNSITION_PX,
@@ -243,6 +249,7 @@ class _IntroViewsFlutterState extends State<IntroViewsFlutter>
             percentVisible: 1.0,
             columnMainAxisAlignment: widget.columnMainAxisAlignment,
           ), //Pages
+
           PageReveal(
             //next page reveal
             revealPercent: slidePercent,
@@ -251,18 +258,8 @@ class _IntroViewsFlutterState extends State<IntroViewsFlutter>
                 percentVisible: slidePercent,
                 columnMainAxisAlignment: widget.columnMainAxisAlignment),
           ), //PageReveal
-
-          PagerIndicator(
-            //bottom page indicator
-            viewModel: PagerIndicatorViewModel(
-              pages,
-              activePageIndex,
-              slideDirection,
-              slidePercent,
-            ),
-          ), //PagerIndicator
-
           PageIndicatorButtons(
+            bottomBarColor: widget.bottomBarColor,
             //Skip and Done Buttons
             textStyle: textStyle,
             activePageIndex: activePageIndex,
@@ -317,6 +314,15 @@ class _IntroViewsFlutterState extends State<IntroViewsFlutter>
             doneButtonPersist: widget.doneButtonPersist,
           ),
 
+          PagerIndicator(
+            //bottom page indicator
+            viewModel: PagerIndicatorViewModel(
+              pages,
+              activePageIndex,
+              slideDirection,
+              slidePercent,
+            ),
+          ), //PagerIndicator
           PageDragger(
             //Used for gesture control
             fullTransitionPX: widget.fullTransition,

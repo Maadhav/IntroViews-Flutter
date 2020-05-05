@@ -91,6 +91,7 @@ class DoneButton extends StatelessWidget {
 class PageIndicatorButtons extends StatelessWidget {
   //Some variables
   final int activePageIndex;
+  final Color bottomBarColor; //background color of bottom navigation where skip, back, next and dots are placed
   final int totalPages;
   final VoidCallback onPressedDoneButton; //Callback for Done Button
   final VoidCallback onPressedNextButton;
@@ -199,6 +200,7 @@ class PageIndicatorButtons extends StatelessWidget {
       this.doneButtonPersist,
       this.showNextButton = true,
       this.showBackButton = true,
+      this.bottomBarColor = Colors.transparent,
       this.backText});
 
   @override
@@ -209,7 +211,9 @@ class PageIndicatorButtons extends StatelessWidget {
       bottom: 0.0,
       child: DefaultTextStyle(
         style: textStyle,
-        child: Row(
+        child: Container( 
+          color: bottomBarColor,
+          child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
@@ -224,6 +228,7 @@ class PageIndicatorButtons extends StatelessWidget {
                 )
           ],
         ),
+        )
       ),
     );
   }
